@@ -1,0 +1,506 @@
+// Bootstrap 5 變數覆寫（需在 @use 前定義）
+$primary: #1a6bcc;
+$dark: #1a1d23;
+$body-bg: #f4f6f9;
+$sidebar-width: 280px;
+
+// 引入 Bootstrap
+@use 'bootstrap/scss/bootstrap';
+
+// ─────────────────────────────────────
+// 全域基礎
+// ─────────────────────────────────────
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans TC', sans-serif;
+}
+
+// ─────────────────────────────────────
+// 登入頁
+// ─────────────────────────────────────
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1d23 0%, #2c3149 100%);
+
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        background: $primary;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+      }
+
+      h1 {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+        color: #1a1d23;
+      }
+    }
+
+    .token-input {
+      font-family: monospace;
+      font-size: 13px;
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+
+      &:focus {
+        background: #fff;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.15);
+      }
+    }
+  }
+}
+
+// ─────────────────────────────────────
+// 主版面（左右分割）
+// ─────────────────────────────────────
+.chat-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+
+  // ── 左側 Sidebar ──
+  .sidebar {
+    width: $sidebar-width;
+    min-width: $sidebar-width;
+    background: #1a1d23;
+    color: #c9cdd4;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #2c3149;
+
+    .sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid #2c3149;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        font-size: 15px;
+        color: #fff;
+
+        .brand-icon {
+          width: 28px;
+          height: 28px;
+          background: $primary;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 13px;
+          font-weight: 700;
+          color: #fff;
+        }
+      }
+    }
+
+    .sidebar-actions {
+      padding: 12px 16px;
+      border-bottom: 1px solid #2c3149;
+    }
+
+    .session-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #3a3f52;
+        border-radius: 2px;
+      }
+
+      .session-item {
+        padding: 10px 16px;
+        cursor: pointer;
+        border-left: 3px solid transparent;
+        transition: background 0.15s;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        &.active {
+          background: rgba($primary, 0.15);
+          border-left-color: $primary;
+
+          .session-title {
+            color: #fff;
+          }
+        }
+
+        .session-title {
+          font-size: 13px;
+          color: #c9cdd4;
+          font-weight: 500;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-bottom: 2px;
+        }
+
+        .session-meta {
+          font-size: 11px;
+          color: #5a6075;
+        }
+      }
+
+      .session-empty,
+      .session-error,
+      .session-loading {
+        padding: 20px 16px;
+        font-size: 13px;
+        color: #5a6075;
+        text-align: center;
+      }
+
+      .session-error {
+        color: #f87171;
+      }
+    }
+
+    .sidebar-footer {
+      padding: 12px 16px;
+      border-top: 1px solid #2c3149;
+
+      .logout-btn {
+        width: 100%;
+        font-size: 13px;
+        background: transparent;
+        border: 1px solid #3a3f52;
+        color: #c9cdd4;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.05);
+          color: #fff;
+          border-color: #5a6075;
+        }
+      }
+    }
+  }
+
+  // ── 右側聊天區域 ──
+  .chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #f4f6f9;
+    overflow: hidden;
+
+    .chat-header {
+      padding: 14px 20px;
+      background: #fff;
+      border-bottom: 1px solid #e8eaf0;
+      font-weight: 600;
+      font-size: 15px;
+      color: #1a1d23;
+      min-height: 52px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #d0d5dd;
+        border-radius: 3px;
+      }
+
+      .message-bubble {
+        max-width: 70%;
+
+        &.user {
+          align-self: flex-end;
+
+          .bubble-content {
+            background: $primary;
+            color: #fff;
+            border-radius: 18px 18px 4px 18px;
+          }
+
+          .bubble-meta {
+            text-align: right;
+          }
+        }
+
+        &.assistant {
+          align-self: flex-start;
+
+          .bubble-content {
+            background: #fff;
+            color: #1a1d23;
+            border-radius: 18px 18px 18px 4px;
+            border: 1px solid #e8eaf0;
+          }
+        }
+
+        &.system {
+          align-self: center;
+          max-width: 90%;
+
+          .bubble-content {
+            background: #f0f4f8;
+            color: #6b7280;
+            border-radius: 8px;
+            font-size: 12px;
+            text-align: center;
+          }
+        }
+
+        .bubble-content {
+          padding: 10px 14px;
+          font-size: 14px;
+          line-height: 1.5;
+          white-space: pre-wrap;
+          word-break: break-word;
+
+          .message-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+
+            img {
+              max-width: 160px;
+              max-height: 120px;
+              border-radius: 6px;
+              object-fit: cover;
+              cursor: pointer;
+            }
+          }
+        }
+
+        .bubble-meta {
+          font-size: 11px;
+          color: #9ca3af;
+          margin-top: 4px;
+          padding: 0 4px;
+        }
+      }
+
+      // 狀態提示
+      .messages-empty,
+      .messages-error,
+      .messages-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: #9ca3af;
+        font-size: 14px;
+      }
+
+      .messages-error {
+        color: #ef4444;
+      }
+    }
+
+    .chat-placeholder {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      color: #9ca3af;
+
+      .placeholder-icon {
+        font-size: 48px;
+        opacity: 0.4;
+      }
+
+      p {
+        font-size: 14px;
+        margin: 0;
+      }
+    }
+
+    // ── 訊息輸入區 ──
+    .chat-input-area {
+      padding: 16px 20px;
+      background: #fff;
+      border-top: 1px solid #e8eaf0;
+
+      .image-previews {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 10px;
+
+        .preview-item {
+          position: relative;
+          width: 72px;
+          height: 72px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #e8eaf0;
+          }
+
+          .preview-remove {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            background: #ef4444;
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+
+            &:hover {
+              background: #dc2626;
+            }
+          }
+
+          .preview-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            font-size: 9px;
+            padding: 2px 4px;
+            border-radius: 0 0 6px 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .drop-zone {
+        border: 2px dashed #d0d5dd;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 13px;
+        color: #9ca3af;
+        cursor: pointer;
+        transition: border-color 0.15s, background 0.15s;
+
+        &:hover,
+        &.drag-over {
+          border-color: $primary;
+          background: rgba($primary, 0.04);
+          color: $primary;
+        }
+      }
+
+      .input-row {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+
+        .message-textarea {
+          flex: 1;
+          resize: none;
+          border: 1px solid #dee2e6;
+          border-radius: 8px;
+          padding: 10px 14px;
+          font-size: 14px;
+          line-height: 1.5;
+          min-height: 44px;
+          max-height: 180px;
+          overflow-y: auto;
+          font-family: inherit;
+          transition: border-color 0.15s;
+
+          &:focus {
+            outline: none;
+            border-color: $primary;
+            box-shadow: 0 0 0 3px rgba($primary, 0.1);
+          }
+
+          &::placeholder {
+            color: #b0b8c1;
+          }
+        }
+
+        .send-btn {
+          height: 44px;
+          padding: 0 20px;
+          border-radius: 8px;
+          font-weight: 600;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+
+        .attach-btn {
+          height: 44px;
+          width: 44px;
+          padding: 0;
+          border-radius: 8px;
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+        }
+      }
+
+      .input-hint {
+        font-size: 11px;
+        color: #b0b8c1;
+        margin-top: 6px;
+        text-align: right;
+      }
+    }
+  }
+}

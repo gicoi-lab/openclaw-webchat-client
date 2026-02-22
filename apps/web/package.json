@@ -1,0 +1,24 @@
+{
+  "name": "@openclaw/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "OpenClaw Web Chat 前端（Vite + Vue3 + Bootstrap5）",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "sass": "^1.83.4",
+    "typescript": "^5.7.3",
+    "vite": "^5.4.14",
+    "vue-tsc": "^2.2.0"
+  }
+}
